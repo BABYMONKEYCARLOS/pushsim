@@ -1,0 +1,72 @@
+
+
+
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/exploiting/main/EngoUILIB_V2.lua", true))()
+
+local main = library:CreateMain("push sim", "", Enum.KeyCode.LeftAlt)
+
+local tab = main:CreateTab("")
+
+tab:CreateLabel("@babymonkeycarlos on disc")
+
+tab:CreateToggle("auto train", function(value)
+while true do
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PowerGain"):FireServer()
+wait (0.01)
+end
+end);
+
+tab:CreateToggle("auto push", function(value)
+while true do
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PushGain"):FireServer()
+wait (0.01)
+end
+end);
+
+tab:CreateToggle("auto rebirth", function(value)
+
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Make sure LocalPlayer exists
+if LocalPlayer then
+    -- Access the PlayerGui of LocalPlayer
+    local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+    -- Access the "UI" folder within PlayerGui
+    local uiFolder = playerGui:WaitForChild("UI")
+
+    -- Access the "Notification" frame within the "UI" folder
+    local notificationFrame = uiFolder:FindFirstChild("Notification")
+
+    -- Check if the frame exists and is a Frame instance
+    if notificationFrame and notificationFrame:IsA("Frame") then
+        -- Remove the "Notification" frame
+        notificationFrame:Destroy()
+    end
+end
+
+-- Auto-rebirth
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local RebirthRemote = Remotes:WaitForChild("Rebirth")
+
+local function canRebirth()
+    return true -- Replace this with your condition to check if rebirth is possible
+end
+
+while true do
+    if canRebirth() then
+        RebirthRemote:FireServer()
+    end
+    wait(0.01) -- Adjust the time interval between rebirth attempts
+end
+end);
+
+tab:CreateToggle("claim playtime rewards", function(value)
+for i = 1, 12 do
+    game:GetService("ReplicatedStorage").Remotes.PlaytimeRewards:FireServer("Gift_" .. i)
+end
+end);
